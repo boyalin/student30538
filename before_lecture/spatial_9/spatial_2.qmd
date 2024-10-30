@@ -8,7 +8,7 @@ execute:
 format:
     beamer:
         toc: true
-        fig-height: 2.5
+        fig-height: 2
         include-in-header: header_pagenrs.tex
 include-before-body:
   text: |
@@ -18,9 +18,23 @@ include-before-body:
       breaksymbolleft={},
       breaklines
     }
-    
----
+output-width: 70%
 
+--- 
+<!--
+---
+title: "Spatial II"
+author: "Peter Ganong and Maggie Shi"
+date: today
+date-format: long
+toc: false
+execute: 
+    echo: true
+format:
+    html:
+        toc: false 
+---
+-->
 # Introduction to data structures in geopandas (6.2)
 
 ## Geopandas roadmap
@@ -54,13 +68,6 @@ Vocabulary
 -   Usually also have `.prj` which describes the Coordinate Reference System (CRS)
 -   When you read in `map.shp` it automatically reads the rest of them as well to give you proper GeoDataFrame composed of geometry, attributes and projection.
 
-## File format II: GeoPackage
-
--   single file `.gpkg`
--   Supports both raster and vector data
--   Efficiently decodable by software, particularly in mobile devices
-
-GeoPackage is more modern, but you will encounter shapefiles everywhere you look so good to be familiar with it.
 
 ## Coordinate Reference Systems
 - Coordinate Reference System (CRS) is a combination of:
@@ -80,6 +87,7 @@ GeoPackage is more modern, but you will encounter shapefiles everywhere you look
 Then you can look up "Illinois" and show that there are Illinois-east and Illinois-west-specific CRS's. 
 The skill they should learn is what a CRS is and how to look up the EPSG numbers so that they can transform from one CRS to another: https://geopandas.org/en/stable/docs/reference/api/geopandas.GeoDataFrame.to_crs.html  -->
 
+
 ## Reading a Shapefile `.shp`
 
 ```{python}
@@ -88,6 +96,15 @@ filepath = "data/shp/austin_pop_2019.shp"
 data = gpd.read_file(filepath)
 ```
 
+
+## File format II: GeoPackage
+
+-   single file `.gpkg`
+-   Supports both raster and vector data
+-   Efficiently decodable by software, particularly in mobile devices
+
+GeoPackage is more modern, but you will encounter shapefiles everywhere you look so good to be familiar with it.
+
 ## Reading a GeoPackage `gpkg`
 
 ```{python}
@@ -95,6 +112,9 @@ filepath = "data/austin_pop_2019.gpkg"
 data = gpd.read_file(filepath)
 type(data)
 ```
+
+
+
 
 ## Previewing a `GeoDataFrame`
 
@@ -114,8 +134,7 @@ data.plot()
 Discussion question: Why isn't it enough to just to `head()`?
 
 
-<!-- ZZZ solution: because WKT isn't intellgible to you for sanity checking. But seeing an actual map is-->
-<!-- MS to GGG: also mention here that these WKT are not comparable to the WKT we saw in examples earlier because they're on different coordinate reference systems? -->
+<!-- ZZZ solution: because WKT isn't intellgible to you for sanity checking. But seeing an actual map is. Also, note that the WKT are not comparable to the WKT we saw in examples earlier because they're on different coordinate reference systems? -->
 
 ## Geopandas summary
 
@@ -166,7 +185,7 @@ data.head()
 data.plot(column="area_km2", legend=True)
 ```
 
-Why is this a nearly useless set of colors?
+Discussion question -- why is this a nearly useless set of colors?
 <!--Usually we do choropleths based on attributes. Will do this in the next section of lecture.-->
 
 ## geometries: summary
@@ -190,7 +209,7 @@ Why is this a nearly useless set of colors?
 
 ## Austin, continued
 
-(The textbook uses a slightly different file here, unclear why.)
+(The textbook uses a slightly different file here, unclear why to us.)
 ```{python}
 filepath = "data/austin_pop_density_2019.gpkg"
 data = gpd.read_file(filepath)
@@ -207,7 +226,7 @@ type(data["geometry"].values[0])
 ```
 
 ## explore the data III
-```{python out-height = 1.5}
+```{python out-height = 1}
 import matplotlib.pyplot as plt
 data.plot(facecolor="none", linewidth=0.2)
 plt.axis("off")
@@ -215,11 +234,11 @@ plt.show()
 ```
 
 - Import `matplotlib.pyplot` to access additional plotting options (e.g., x and y labels, title)
-- We turn the axis off because the WKT is not particularly informative
+- We turn the axis off because the WKT is not informative
 
 
 ## explore the data IV
-```{python out-height = 1.5}
+```{python out-height = 1}
 data.plot(column="pop_density_km2")
 plt.axis("off")
 plt.show()
@@ -231,7 +250,6 @@ plt.show()
 ## methods: centroid I
 
 What it is: arithmetic mean position of all the points in a polygon
-<!-- MS to GGG: this used to read "arithmetic mean position of all the points in the surface of the figure", but I think "polygons" is more accurate? -->
 
 Sample use case: measuring distance between center of each multipolygon
 
@@ -245,6 +263,20 @@ data.centroid.plot(markersize=1)
 plt.axis("off")
 plt.show()
 ```
+
+## centroid example outside polygon
+
+![](pictures/census-usa-example_zoom19.png){height="80%"}
+
+Source: https://spatialanalysisonline.com/HTML/centroids_and_centers.htm
+
+## aside: change active geometry
+```{python}
+data["centroid"] = data.centroid
+data.set_geometry("centroid")
+data.head()
+```
+
 
 ## methods: bounding box definition
 
@@ -283,25 +315,21 @@ poly = Polygon([point1, point2, point3, point4])
 - *Note*: the order in which you put these points together matters, and you'll get all sorts of interesting shapes with different orders!
 
 <!-- PG to MS:
-1. data.union_all().envelope should also work, but it is throwing an error for me, I'm curious if it works for you
-2. One fun thing I learned by accident is that if you put the points in a different order that you get all sorts of interesting shapes. Not sure we really care about this, but could be a fun short in-class exercise
+data.union_all().envelope should also work, but it is throwing an error for me
 
-MS to GGG: I'm getting "AttributeError: 'GeoDataFrame' object has no attribute 'union_all'"
+MS to PG: I'm also getting an error.  "AttributeError: 'GeoDataFrame' object has no attribute 'union_all'"
 Very odd since there's documentation for it... https://geopandas.org/en/latest/docs/reference/api/geopandas.GeoSeries.union_all.html
-
-I added a line on that second point!
 -->
 
 ## methods: buffer I
 
 What it is: shape representing all points that are less than a certain distance from the original shape
 
-Sample use case: how many stores or parks near a neighborhood
+Sample use cases: 
 
-<!-- CC additional suggestion for motivations which I did not include for space reasons
-* geometries that don’t line up. Coasts are a moving target. Some geometries will go out into the water. Others will have a well-defined coast. 
-* Also for selecting for the spatial relationships
--->
+* how many stores or parks near a neighborhood
+* geometries that don't line up well (e.g. coasts)
+* selecting nearby geometries
 
 ## methods: buffer II
 
@@ -341,12 +369,6 @@ dissolved
 - Aggregating alters the way the data is indexed and makes the grouping variable the index
 - We need to reset it in order to plot, since some plotting libraries expect data to be indexed in a specific way
 
-<!--
-PG to MS not sure if we need more detail here. If you want more detail see the conversation here, but that feels like TMI
-https://chatgpt.com/share/66eb10ee-3a10-800a-bee6-89851e220d69
-
-MS to GGG: I was a little confused, so I added in the bullets above. 
--->
 
 ## methods: dissolve III
 ```{python}
@@ -355,7 +377,7 @@ plt.axis("off")
 plt.show()
 ```
 
-Discussion Question: is this a good map? What can we do to improve it?
+Discussion Question: What can we do to improve this map?
 
 <!-- ZZZ: no -- the reader has no idea what purple and yellow mean. It would be better if we added a legend that indicates that purple areas are above-median in population density while yellow is below-median. -->
 
@@ -364,21 +386,22 @@ Discussion Question: is this a good map? What can we do to improve it?
 
 Spatial join: find the closest neighbor.
 
-(Contrived) example: Join Austin tracts to themselves. How many tracts should we expect to get?
-
 ```{python}
 data_for_join = data[["tract", "geometry"]]
 print("N tracts " + str(len(data_for_join)))
-join_to_self = gpd.sjoin_nearest(data_for_join, data_for_join, how='inner', distance_col="distance")
+
 ```
+
+(Contrived) example: Join every Austin tract to its closest neighbor or neighbors. How many tracts should we expect to get?
 
 
 ## methods: spatial join II
 
 
 ```{python}
+join_to_self = gpd.sjoin_nearest(data_for_join, data_for_join, how='inner', distance_col="distance")
 print("N tracts w closest neighbor " + str(len(join_to_self)))
-join_to_self.head(4)
+join_to_self[['tract_left', 'tract_right', 'distance']].head(4)
 ```
 
 

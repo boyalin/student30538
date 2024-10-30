@@ -3,11 +3,12 @@ title: "Spatial I"
 author: "Peter Ganong and Maggie Shi"
 date: today
 date-format: long
+toc: false
 execute: 
     echo: true
 format:
     html:
-        toc: true
+        toc: false 
 ---
 
 <!--
@@ -111,25 +112,13 @@ vectors can be scaled up or down without losing integrity, but raster allows you
 
 ![](pictures/vector_data_model.jpg){height="100%"}
 
+The numbers are called **well-known text**: a version of the data which is easily interpretable to a human. We will discuss how to read these shortly!
 
-## Building blocks of vector data
 
-| Data type         | Well-known text (WKT)                  |
-|-------------------|----------------------------------------|
-| `Point`           | `(25 60.5)`                            |
-| `LineString`      | `(24.5 61, 25 60.5, 25.5 61)`          |
-| `Polygon`         | `(24.5 61, 25 60.5, 25.5 61, 24.5 61)` |
-| `MultiPoint`      | `((25 60.5) (25.5 61))`                |
-| `MultiLineString` | ...                                    |
-| `MultiPolygon`    | ...                                    |
-
-**Well-known text** is the version of the data which is easily interpretable to a human
-
-We will discuss how to read these shortly!
 
 ## Attribute data
 
-In virtually every example, we will associate **attribute** data of the type that might appear in a table with vector data.
+In virtually every example, we will associate **attribute** data with vectors -- these are what might appear in a table in a standard dataframe, but now the data is associated with a point, line, or shape.
 
 Examples of data that would associate with a *point*:
 
@@ -141,15 +130,6 @@ Discussion question: what type of data would you associate with...
 
 1.  ...a building?
 2.  ...a geographic area?
-
-<!-- ZZZ this is a pretty open-ended brainstorm, but here are a few examples in case people get stuck
-1. address 
-2. population, GDP-->
-
-<!-- MS to GGG: we should differentiate between attributes that are built-in to each geography type (e.g., centroid and length) as opposed to attributes like the examples listed above that are not related to the geography per se 
-
-Also we should note that we're not covering every possible attribute for each geometry type -- students should read the documentation, which lists all of the possible attributes. https://shapely.readthedocs.io/en/stable/reference/shapely.Point.html#shapely.Point -->
-
 
 ## Intro: summary
 
@@ -166,8 +146,9 @@ Also we should note that we're not covering every possible attribute for each ge
 -   `LineString`
 -   `Polygon`
 
-Within each data type, we will cover creation, Well Known Text (WKT), and coordinates.
+Within each data type, we will cover creation, Well Known Text (WKT), and coordinates. 
 
+*Note: when working with spatial data, we typically will not start by creating the shapes themselves. But it is important to understand them because they form the basis of spatial data and all spatial transformation is just manipulating the underlying vectors.*
 
 
 ## `Point`: creating geometries
@@ -179,9 +160,6 @@ point = Point(2.2, 4.2)
 point
 ```
 
-<!-- ZZZ
-MS comment: I anticipate students will ask, what do these coordinates meann? ChatGPT says the coordinates depend on a specific coordinate system, but we haven't defined a coordinate system yet. (https://chatgpt.com/share/66eb3cc4-8690-800f-b01f-8153f30dc78b) Without defining a coordinate system, can we say that these coordinates just represent locations relative to some arbitrary point on the screen -->
-
 ## `Point`: Well Known Text (WKT) representation
 
 ```{python}
@@ -192,7 +170,9 @@ point3D = Point(9.26, -2.456, 0.57)
 print(point3D)
 ```
 
-`WKT` gives you a plaintext representation of where the point is. It contrasts with Well Known Binary (`WKB`) which stores geo data in the way which is most efficient for the computer. Wikipedia has some nice [examples](https://en.wikipedia.org/wiki/Well-known_text_representation_of_geometry) of how the same point is stored by WKT and WKB.
+* `WKT` gives you a plaintext representation of where the point is. 
+* It contrasts with Well Known Binary (`WKB`) which stores geo data in the way which is most efficient for the computer. 
+    * Wikipedia has some nice [examples](https://en.wikipedia.org/wiki/Well-known_text_representation_of_geometry) of how the same point is stored by WKT and WKB.
 
 ## `Point`: Coordinate representation
 
@@ -204,6 +184,7 @@ type(point.coords)
 list(point.coords)
 ```
 
+When the object is a `Point`, the `WKT` looks very similar to the coordinates. As the objects get more complicated, the formatting of `WKT` starts to deviate from coordinates. 
 
 ## `Point`: extraction methods
 
@@ -214,6 +195,7 @@ print(point.x)
 ```{python}
 print(point.xy)
 ```
+
 
 
 
@@ -247,24 +229,13 @@ line_from_tuples = LineString([(2.2, 4.2), (7.2, -25.1), (9.26, -2.456)])
 2.  How can you access the Well Known Text representation?
 
 
-<!-- ZZZ 1. LINESTRING (2.2 4.2, 7.2 -25.1, 9.26 -2.456) 2. line.wkt -->
-
 ## `LineString` coordinate representation
 
 ```{python}
 list(line.coords)
 ```
 
-```{python}
-xcoords = list(line.xy[0])
-ycoords = list(line.xy[1])
-
-print(xcoords)
-print(ycoords)
-```
-
 ## `LineString` attributes
-
 ```{python}
 xcoords = list(line.xy[0])
 ycoords = list(line.xy[1])
@@ -272,15 +243,17 @@ ycoords = list(line.xy[1])
 print(xcoords)
 print(ycoords)
 ```
+
 
 ## `LineString` attributes, continued
+Length is the sum of distances between consecutive points. 
 
 ```{python}
 length = line.length
-centroid = line.centroid
 print(f"Length of our line: {length:.2f} units")
-print(f"Centroid: {centroid}")
 ```
+
+
 
 
 ## `Polygon`: creating geometries
@@ -298,17 +271,45 @@ poly
 poly.wkt
 ```
 
-Note the double parentheses
+Note the double parentheses. In contrast:
+
+```{python}
+line.wkt
+```
 
 ## `Polygon`: attributes
 
 ```{python}
 print("Polygon centroid: ", poly.centroid)
-print("Polygon Area: ", poly.area)
-print("Polygon Bounding Box: ", poly.bounds)
-print("Polygon Exterior: ", poly.exterior)
-print("Polygon Exterior Length: ", poly.exterior.length)
+poly.centroid
 ```
+
+```{python}
+print("Polygon Area: ", poly.area)
+poly.area 
+```
+
+```{python}
+print("Polygon Bounding Box: ", poly.bounds)
+poly.bounds
+```
+
+```{python}
+print("Polygon Exterior: ", poly.exterior)
+poly.exterior
+```
+
+`LinearRing` is similar to a `LineString`, but it it must be:
+    1. a closed loop
+    2. cannot intersect itself
+
+`Polygon`s can be easily formed from `LinearRing`s but not all `LineString`s can be transformed into polygons.
+
+```{python}
+print("Polygon Exterior Length: ", poly.exterior.length)
+poly.exterior.length
+```
+
 
 ## `Polygon`: example II
 
@@ -316,6 +317,11 @@ print("Polygon Exterior Length: ", poly.exterior.length)
 exterior = [(-180, 90), (-180, -90), (180, -90), (180, 90)]
 poly_without_hole = Polygon(shell=exterior)
 poly_without_hole
+```
+
+```{python}
+linestring_from_exterior = LineString(exterior)
+linestring_from_exterior
 ```
 
 ## `Polygon`: example II with a hole
@@ -369,10 +375,10 @@ circle
 |--------------|----------------------------------------|
 | `Point`      | `(25 60.5)`                            |
 | `LineString` | `(24.5 61, 25 60.5, 25.5 61)`          |
-| `Polygon`    | `(24.5 61, 25 60.5, 25.5 61, 24.5 61)` |
+| `Polygon`    | `((24.5 61, 25 60.5, 25.5 61, 24.5 61))` |
 
 Methods
 
--   any type: `.coords`, `.x`, `.xy`
+-   any type: `.coords`, `.x`, `.xy`, `.wkt`
 -   `LineString` or `Polygon`: `.centroid`, `.length`
 -   `Polygon`: `.bounds`, `.area`, `.exterior`

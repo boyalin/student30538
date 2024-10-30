@@ -2,12 +2,12 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.2.335">
+<meta name="generator" content="quarto-1.5.56">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Peter Ganong and Maggie Shi">
-<meta name="dcterms.date" content="2024-10-28">
+<meta name="dcterms.date" content="2024-10-29">
 
 <title>Spatial I</title>
 <style>
@@ -19,11 +19,12 @@ div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
 ul.task-list{list-style: none;}
 ul.task-list li input[type="checkbox"] {
   width: 0.8em;
-  margin: 0 0.8em 0.2em -1.6em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
 pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span { line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
 .sourceCode { overflow: visible; }
 code.sourceCode > span { color: inherit; text-decoration: inherit; }
@@ -34,7 +35,7 @@ div.sourceCode { overflow: auto; }
 }
 @media print {
 pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
 }
 pre.numberSource code
   { counter-reset: source-line 0; }
@@ -48,43 +49,13 @@ pre.numberSource code > span > a:first-child::before
     -khtml-user-select: none; -moz-user-select: none;
     -ms-user-select: none; user-select: none;
     padding: 0 4px; width: 4em;
-    color: #aaaaaa;
   }
-pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
 div.sourceCode
   {   }
 @media screen {
 pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
-code span.al { color: #ff0000; font-weight: bold; } /* Alert */
-code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
-code span.at { color: #7d9029; } /* Attribute */
-code span.bn { color: #40a070; } /* BaseN */
-code span.bu { color: #008000; } /* BuiltIn */
-code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
-code span.ch { color: #4070a0; } /* Char */
-code span.cn { color: #880000; } /* Constant */
-code span.co { color: #60a0b0; font-style: italic; } /* Comment */
-code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
-code span.do { color: #ba2121; font-style: italic; } /* Documentation */
-code span.dt { color: #902000; } /* DataType */
-code span.dv { color: #40a070; } /* DecVal */
-code span.er { color: #ff0000; font-weight: bold; } /* Error */
-code span.ex { } /* Extension */
-code span.fl { color: #40a070; } /* Float */
-code span.fu { color: #06287e; } /* Function */
-code span.im { color: #008000; font-weight: bold; } /* Import */
-code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
-code span.kw { color: #007020; font-weight: bold; } /* Keyword */
-code span.op { color: #666666; } /* Operator */
-code span.ot { color: #007020; } /* Other */
-code span.pp { color: #bc7a00; } /* Preprocessor */
-code span.sc { color: #4070a0; } /* SpecialChar */
-code span.ss { color: #bb6688; } /* SpecialString */
-code span.st { color: #4070a0; } /* String */
-code span.va { color: #19177c; } /* Variable */
-code span.vs { color: #4070a0; } /* VerbatimString */
-code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
 </style>
 
 
@@ -102,50 +73,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
 </head>
 
-<body>
+<body class="fullcontent">
 
 <div id="quarto-content" class="page-columns page-rows-contents page-layout-article">
-<div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-  <nav id="TOC" role="doc-toc" class="toc-active">
-    <h2 id="toc-title">Table of contents</h2>
-   
-  <ul>
-  <li><a href="#introduction-5.2" id="toc-introduction-5.2" class="nav-link active" data-scroll-target="#introduction-5.2">Introduction (5.2)</a>
-  <ul class="collapse">
-  <li><a href="#intro-roadmap" id="toc-intro-roadmap" class="nav-link" data-scroll-target="#intro-roadmap">Intro: roadmap</a></li>
-  <li><a href="#motivation" id="toc-motivation" class="nav-link" data-scroll-target="#motivation">Motivation</a></li>
-  <li><a href="#textbook" id="toc-textbook" class="nav-link" data-scroll-target="#textbook">Textbook</a></li>
-  <li><a href="#requirements.txt" id="toc-requirements.txt" class="nav-link" data-scroll-target="#requirements.txt"><code>requirements.txt</code></a></li>
-  <li><a href="#vector-vs-raster-data" id="toc-vector-vs-raster-data" class="nav-link" data-scroll-target="#vector-vs-raster-data">Vector vs raster data</a></li>
-  <li><a href="#examples-of-vector-data" id="toc-examples-of-vector-data" class="nav-link" data-scroll-target="#examples-of-vector-data">Examples of vector data</a></li>
-  <li><a href="#building-blocks-of-vector-data" id="toc-building-blocks-of-vector-data" class="nav-link" data-scroll-target="#building-blocks-of-vector-data">Building blocks of vector data</a></li>
-  <li><a href="#attribute-data" id="toc-attribute-data" class="nav-link" data-scroll-target="#attribute-data">Attribute data</a></li>
-  <li><a href="#intro-summary" id="toc-intro-summary" class="nav-link" data-scroll-target="#intro-summary">Intro: summary</a></li>
-  </ul></li>
-  <li><a href="#representing-geographic-data-in-vector-format-6.1" id="toc-representing-geographic-data-in-vector-format-6.1" class="nav-link" data-scroll-target="#representing-geographic-data-in-vector-format-6.1">Representing geographic data in vector format (6.1)</a>
-  <ul class="collapse">
-  <li><a href="#geo-data-in-vectors-roadmap" id="toc-geo-data-in-vectors-roadmap" class="nav-link" data-scroll-target="#geo-data-in-vectors-roadmap">geo data in vectors: roadmap</a></li>
-  <li><a href="#point-creating-geometries" id="toc-point-creating-geometries" class="nav-link" data-scroll-target="#point-creating-geometries"><code>Point</code>: creating geometries</a></li>
-  <li><a href="#point-well-known-text-wkt-representation" id="toc-point-well-known-text-wkt-representation" class="nav-link" data-scroll-target="#point-well-known-text-wkt-representation"><code>Point</code>: Well Known Text (WKT) representation</a></li>
-  <li><a href="#point-coordinate-representation" id="toc-point-coordinate-representation" class="nav-link" data-scroll-target="#point-coordinate-representation"><code>Point</code>: Coordinate representation</a></li>
-  <li><a href="#point-extraction-methods" id="toc-point-extraction-methods" class="nav-link" data-scroll-target="#point-extraction-methods"><code>Point</code>: extraction methods</a></li>
-  <li><a href="#linestring-creating-geometries" id="toc-linestring-creating-geometries" class="nav-link" data-scroll-target="#linestring-creating-geometries"><code>LineString</code>: creating geometries</a></li>
-  <li><a href="#linestring-creation-syntax" id="toc-linestring-creation-syntax" class="nav-link" data-scroll-target="#linestring-creation-syntax"><code>LineString</code>: creation syntax</a></li>
-  <li><a href="#linestring-discussion-questions" id="toc-linestring-discussion-questions" class="nav-link" data-scroll-target="#linestring-discussion-questions"><code>LineString</code> discussion questions</a></li>
-  <li><a href="#linestring-coordinate-representation" id="toc-linestring-coordinate-representation" class="nav-link" data-scroll-target="#linestring-coordinate-representation"><code>LineString</code> coordinate representation</a></li>
-  <li><a href="#linestring-attributes" id="toc-linestring-attributes" class="nav-link" data-scroll-target="#linestring-attributes"><code>LineString</code> attributes</a></li>
-  <li><a href="#linestring-attributes-continued" id="toc-linestring-attributes-continued" class="nav-link" data-scroll-target="#linestring-attributes-continued"><code>LineString</code> attributes, continued</a></li>
-  <li><a href="#polygon-creating-geometries" id="toc-polygon-creating-geometries" class="nav-link" data-scroll-target="#polygon-creating-geometries"><code>Polygon</code>: creating geometries</a></li>
-  <li><a href="#polygon-wkt" id="toc-polygon-wkt" class="nav-link" data-scroll-target="#polygon-wkt"><code>Polygon</code>: WKT</a></li>
-  <li><a href="#polygon-attributes" id="toc-polygon-attributes" class="nav-link" data-scroll-target="#polygon-attributes"><code>Polygon</code>: attributes</a></li>
-  <li><a href="#polygon-example-ii" id="toc-polygon-example-ii" class="nav-link" data-scroll-target="#polygon-example-ii"><code>Polygon</code>: example II</a></li>
-  <li><a href="#polygon-example-ii-with-a-hole" id="toc-polygon-example-ii-with-a-hole" class="nav-link" data-scroll-target="#polygon-example-ii-with-a-hole"><code>Polygon</code>: example II with a hole</a></li>
-  <li><a href="#do-pair-share" id="toc-do-pair-share" class="nav-link" data-scroll-target="#do-pair-share">Do-pair-Share</a></li>
-  <li><a href="#geo-data-in-vectors-summary" id="toc-geo-data-in-vectors-summary" class="nav-link" data-scroll-target="#geo-data-in-vectors-summary">geo data in vectors: summary</a></li>
-  </ul></li>
-  </ul>
-</nav>
-</div>
+
 <main class="content" id="quarto-document-content">
 
 <header id="title-block-header" class="quarto-title-block default">
@@ -167,7 +98,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">October 28, 2024</p>
+      <p class="date">October 29, 2024</p>
     </div>
   </div>
   
@@ -175,7 +106,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   </div>
   
 
+
 </header>
+
 
 <!--
  beamer:
@@ -240,7 +173,7 @@ include-before-body:
 <p>(We will elaborate more on what this file is in minilesson on Wednesday)</p>
 <p><code>shapely</code> – Manipulation and analysis of geometric objects in the Cartesian plane.</p>
 <p><code>geopandas</code> – Geometric objects nested within a standard pandas data frame</p>
-<div class="cell" data-execution_count="1">
+<div id="19848186" class="cell" data-execution_count="1">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> shapely</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> shapely <span class="im">import</span> Polygon, Point</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
@@ -250,61 +183,15 @@ include-before-body:
 <p><img src="pictures/vector_vs_raster.jpg" style="height:80.0%"></p>
 <p><strong>Vector</strong> data records points, lines and shapes. <strong>Raster</strong> data records pixels.</p>
 <p>Discussion question – brainstorm examples of each type of data.</p>
-<!--CC to GGG:  would be good to give a few "real world" examples (from research?) 
-Redlining
-Carl Kitchens' highway research
-Satellite? research 
-
-MS to GGG: relatedly, what are the pro's and con's of each type? Something like: 
-vectors can be scaled up or down without losing integrity, but raster allows you to store fine-grained data at the pixel-level (e.g., plotting a continuous measure)
--->
 </section>
 <section id="examples-of-vector-data" class="level2">
 <h2 class="anchored" data-anchor-id="examples-of-vector-data">Examples of vector data</h2>
 <p><img src="pictures/vector_data_model.jpg" style="height:100.0%"></p>
-</section>
-<section id="building-blocks-of-vector-data" class="level2">
-<h2 class="anchored" data-anchor-id="building-blocks-of-vector-data">Building blocks of vector data</h2>
-<table class="table">
-<thead>
-<tr class="header">
-<th>Data type</th>
-<th>Well-known text (WKT)</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td><code>Point</code></td>
-<td><code>(25 60.5)</code></td>
-</tr>
-<tr class="even">
-<td><code>LineString</code></td>
-<td><code>(24.5 61, 25 60.5, 25.5 61)</code></td>
-</tr>
-<tr class="odd">
-<td><code>Polygon</code></td>
-<td><code>(24.5 61, 25 60.5, 25.5 61, 24.5 61)</code></td>
-</tr>
-<tr class="even">
-<td><code>MultiPoint</code></td>
-<td><code>((25 60.5) (25.5 61))</code></td>
-</tr>
-<tr class="odd">
-<td><code>MultiLineString</code></td>
-<td>…</td>
-</tr>
-<tr class="even">
-<td><code>MultiPolygon</code></td>
-<td>…</td>
-</tr>
-</tbody>
-</table>
-<p><strong>Well-known text</strong> is the version of the data which is easily interpretable to a human</p>
-<p>We will discuss how to read these shortly!</p>
+<p>The numbers are called <strong>well-known text</strong>: a version of the data which is easily interpretable to a human. We will discuss how to read these shortly!</p>
 </section>
 <section id="attribute-data" class="level2">
 <h2 class="anchored" data-anchor-id="attribute-data">Attribute data</h2>
-<p>In virtually every example, we will associate <strong>attribute</strong> data of the type that might appear in a table with vector data.</p>
+<p>In virtually every example, we will associate <strong>attribute</strong> data with vectors – these are what might appear in a table in a standard dataframe, but now the data is associated with a point, line, or shape.</p>
 <p>Examples of data that would associate with a <em>point</em>:</p>
 <ul>
 <li>particulate matter (pollution)</li>
@@ -316,13 +203,6 @@ vectors can be scaled up or down without losing integrity, but raster allows you
 <li>…a building?</li>
 <li>…a geographic area?</li>
 </ol>
-<!-- ZZZ this is a pretty open-ended brainstorm, but here are a few examples in case people get stuck
-1. address 
-2. population, GDP-->
-
-<!-- MS to GGG: we should differentiate between attributes that are built-in to each geography type (e.g., centroid and length) as opposed to attributes like the examples listed above that are not related to the geography per se 
-
-Also we should note that we're not covering every possible attribute for each geometry type -- students should read the documentation, which lists all of the possible attributes. https://shapely.readthedocs.io/en/stable/reference/shapely.Point.html#shapely.Point -->
 </section>
 <section id="intro-summary" class="level2">
 <h2 class="anchored" data-anchor-id="intro-summary">Intro: summary</h2>
@@ -344,24 +224,27 @@ Also we should note that we're not covering every possible attribute for each ge
 <li><code>Polygon</code></li>
 </ul>
 <p>Within each data type, we will cover creation, Well Known Text (WKT), and coordinates.</p>
+<p><em>Note: when working with spatial data, we typically will not start by creating the shapes themselves. But it is important to understand them because they form the basis of spatial data and all spatial transformation is just manipulating the underlying vectors.</em></p>
 </section>
 <section id="point-creating-geometries" class="level2">
 <h2 class="anchored" data-anchor-id="point-creating-geometries"><code>Point</code>: creating geometries</h2>
-<div class="cell" data-execution_count="2">
+<div id="8907b23a" class="cell" data-execution_count="2">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> shapely <span class="im">import</span> Point</span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>point <span class="op">=</span> Point(<span class="fl">2.2</span>, <span class="fl">4.2</span>)</span>
 <span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>point</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="2">
-<p><img src="spatial_1_files/figure-html/cell-3-output-1.svg" class="img-fluid"></p>
+<div>
+<figure class="figure">
+<p><img src="spatial_1_files/figure-html/cell-3-output-1.svg" class="img-fluid figure-img"></p>
+</figure>
 </div>
 </div>
-<!-- ZZZ
-MS comment: I anticipate students will ask, what do these coordinates meann? ChatGPT says the coordinates depend on a specific coordinate system, but we haven't defined a coordinate system yet. (https://chatgpt.com/share/66eb3cc4-8690-800f-b01f-8153f30dc78b) Without defining a coordinate system, can we say that these coordinates just represent locations relative to some arbitrary point on the screen -->
+</div>
 </section>
 <section id="point-well-known-text-wkt-representation" class="level2">
 <h2 class="anchored" data-anchor-id="point-well-known-text-wkt-representation"><code>Point</code>: Well Known Text (WKT) representation</h2>
-<div class="cell" data-execution_count="3">
+<div id="f4234b7d" class="cell" data-execution_count="3">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(point) <span class="co">#extracts WKT</span></span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>point.wkt    <span class="co">#gets WKT directly</span></span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -372,32 +255,39 @@ MS comment: I anticipate students will ask, what do these coordinates meann? Cha
 POINT Z (9.26 -2.456 0.57)</code></pre>
 </div>
 </div>
-<p><code>WKT</code> gives you a plaintext representation of where the point is. It contrasts with Well Known Binary (<code>WKB</code>) which stores geo data in the way which is most efficient for the computer. Wikipedia has some nice <a href="https://en.wikipedia.org/wiki/Well-known_text_representation_of_geometry">examples</a> of how the same point is stored by WKT and WKB.</p>
+<ul>
+<li><code>WKT</code> gives you a plaintext representation of where the point is.</li>
+<li>It contrasts with Well Known Binary (<code>WKB</code>) which stores geo data in the way which is most efficient for the computer.
+<ul>
+<li>Wikipedia has some nice <a href="https://en.wikipedia.org/wiki/Well-known_text_representation_of_geometry">examples</a> of how the same point is stored by WKT and WKB.</li>
+</ul></li>
+</ul>
 </section>
 <section id="point-coordinate-representation" class="level2">
 <h2 class="anchored" data-anchor-id="point-coordinate-representation"><code>Point</code>: Coordinate representation</h2>
-<div class="cell" data-execution_count="4">
+<div id="e3d08c2a" class="cell" data-execution_count="4">
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="bu">type</span>(point.coords)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="4">
 <pre><code>shapely.coords.CoordinateSequence</code></pre>
 </div>
 </div>
-<div class="cell" data-execution_count="5">
+<div id="115bd64c" class="cell" data-execution_count="5">
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="bu">list</span>(point.coords)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="5">
 <pre><code>[(2.2, 4.2)]</code></pre>
 </div>
 </div>
+<p>When the object is a <code>Point</code>, the <code>WKT</code> looks very similar to the coordinates. As the objects get more complicated, the formatting of <code>WKT</code> starts to deviate from coordinates.</p>
 </section>
 <section id="point-extraction-methods" class="level2">
 <h2 class="anchored" data-anchor-id="point-extraction-methods"><code>Point</code>: extraction methods</h2>
-<div class="cell" data-execution_count="6">
+<div id="2355336f" class="cell" data-execution_count="6">
 <div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(point.x)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>2.2</code></pre>
 </div>
 </div>
-<div class="cell" data-execution_count="7">
+<div id="f5e9b1dd" class="cell" data-execution_count="7">
 <div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(point.xy)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>(array('d', [2.2]), array('d', [4.2]))</code></pre>
@@ -406,7 +296,7 @@ POINT Z (9.26 -2.456 0.57)</code></pre>
 </section>
 <section id="linestring-creating-geometries" class="level2">
 <h2 class="anchored" data-anchor-id="linestring-creating-geometries"><code>LineString</code>: creating geometries</h2>
-<div class="cell" data-execution_count="8">
+<div id="3790d949" class="cell" data-execution_count="8">
 <div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> shapely <span class="im">import</span> Point, LineString</span>
 <span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>point1 <span class="op">=</span> Point(<span class="fl">2.2</span>, <span class="fl">4.2</span>)</span>
@@ -417,14 +307,18 @@ POINT Z (9.26 -2.456 0.57)</code></pre>
 <span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a>line_from_tuples <span class="op">=</span> LineString([(<span class="fl">2.2</span>, <span class="fl">4.2</span>), (<span class="fl">7.2</span>, <span class="op">-</span><span class="fl">25.1</span>), (<span class="fl">9.26</span>, <span class="op">-</span><span class="fl">2.456</span>)])</span>
 <span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a>line</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="8">
-<p><img src="spatial_1_files/figure-html/cell-9-output-1.svg" class="img-fluid"></p>
+<div>
+<figure class="figure">
+<p><img src="spatial_1_files/figure-html/cell-9-output-1.svg" class="img-fluid figure-img"></p>
+</figure>
+</div>
 </div>
 </div>
 </section>
 <section id="linestring-creation-syntax" class="level2">
 <h2 class="anchored" data-anchor-id="linestring-creation-syntax"><code>LineString</code>: creation syntax</h2>
 <p>These two input methods produce the same output. No “right” way. Use whichever way is more convenient in your application.</p>
-<div class="cell" data-execution_count="9">
+<div id="f71b4172" class="cell" data-execution_count="9">
 <div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>line <span class="op">=</span> LineString([point1, point2, point3])</span>
 <span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>line_from_tuples <span class="op">=</span> LineString([(<span class="fl">2.2</span>, <span class="fl">4.2</span>), (<span class="fl">7.2</span>, <span class="op">-</span><span class="fl">25.1</span>), (<span class="fl">9.26</span>, <span class="op">-</span><span class="fl">2.456</span>)])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -436,17 +330,19 @@ POINT Z (9.26 -2.456 0.57)</code></pre>
 <li>What output should we expect if we run <code>print(line)</code>? Write down your guess on your MUD card before you run it at the computer.</li>
 <li>How can you access the Well Known Text representation?</li>
 </ol>
-<!-- ZZZ 1. LINESTRING (2.2 4.2, 7.2 -25.1, 9.26 -2.456) 2. line.wkt -->
 </section>
 <section id="linestring-coordinate-representation" class="level2">
 <h2 class="anchored" data-anchor-id="linestring-coordinate-representation"><code>LineString</code> coordinate representation</h2>
-<div class="cell" data-execution_count="10">
+<div id="d08e89cd" class="cell" data-execution_count="10">
 <div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="bu">list</span>(line.coords)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="10">
 <pre><code>[(2.2, 4.2), (7.2, -25.1), (9.26, -2.456)]</code></pre>
 </div>
 </div>
-<div class="cell" data-execution_count="11">
+</section>
+<section id="linestring-attributes" class="level2">
+<h2 class="anchored" data-anchor-id="linestring-attributes"><code>LineString</code> attributes</h2>
+<div id="b1018a4d" class="cell" data-execution_count="11">
 <div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>xcoords <span class="op">=</span> <span class="bu">list</span>(line.xy[<span class="dv">0</span>])</span>
 <span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>ycoords <span class="op">=</span> <span class="bu">list</span>(line.xy[<span class="dv">1</span>])</span>
 <span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -458,91 +354,150 @@ POINT Z (9.26 -2.456 0.57)</code></pre>
 </div>
 </div>
 </section>
-<section id="linestring-attributes" class="level2">
-<h2 class="anchored" data-anchor-id="linestring-attributes"><code>LineString</code> attributes</h2>
-<div class="cell" data-execution_count="12">
-<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>xcoords <span class="op">=</span> <span class="bu">list</span>(line.xy[<span class="dv">0</span>])</span>
-<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>ycoords <span class="op">=</span> <span class="bu">list</span>(line.xy[<span class="dv">1</span>])</span>
-<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(xcoords)</span>
-<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(ycoords)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>[2.2, 7.2, 9.26]
-[4.2, -25.1, -2.456]</code></pre>
-</div>
-</div>
-</section>
 <section id="linestring-attributes-continued" class="level2">
 <h2 class="anchored" data-anchor-id="linestring-attributes-continued"><code>LineString</code> attributes, continued</h2>
-<div class="cell" data-execution_count="13">
-<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>length <span class="op">=</span> line.length</span>
-<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>centroid <span class="op">=</span> line.centroid</span>
-<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Length of our line: </span><span class="sc">{</span>length<span class="sc">:.2f}</span><span class="ss"> units"</span>)</span>
-<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Centroid: </span><span class="sc">{</span>centroid<span class="sc">}</span><span class="ss">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Length is the sum of distances between consecutive points.</p>
+<div id="b22bfb92" class="cell" data-execution_count="12">
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>length <span class="op">=</span> line.length</span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Length of our line: </span><span class="sc">{</span>length<span class="sc">:.2f}</span><span class="ss"> units"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Length of our line: 52.46 units
-Centroid: POINT (6.229961354035622 -11.892411157572392)</code></pre>
+<pre><code>Length of our line: 52.46 units</code></pre>
 </div>
 </div>
 </section>
 <section id="polygon-creating-geometries" class="level2">
 <h2 class="anchored" data-anchor-id="polygon-creating-geometries"><code>Polygon</code>: creating geometries</h2>
-<div class="cell" data-execution_count="14">
-<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> shapely <span class="im">import</span> Polygon</span>
-<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>poly <span class="op">=</span> Polygon([point1, point2, point3])</span>
-<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a>poly</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="14">
-<p><img src="spatial_1_files/figure-html/cell-15-output-1.svg" class="img-fluid"></p>
+<div id="c68e009d" class="cell" data-execution_count="13">
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> shapely <span class="im">import</span> Polygon</span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>poly <span class="op">=</span> Polygon([point1, point2, point3])</span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>poly</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="13">
+<div>
+<figure class="figure">
+<p><img src="spatial_1_files/figure-html/cell-14-output-1.svg" class="img-fluid figure-img"></p>
+</figure>
+</div>
 </div>
 </div>
 </section>
 <section id="polygon-wkt" class="level2">
 <h2 class="anchored" data-anchor-id="polygon-wkt"><code>Polygon</code>: WKT</h2>
-<div class="cell" data-execution_count="15">
-<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>poly.wkt</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="15">
+<div id="93345249" class="cell" data-execution_count="14">
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>poly.wkt</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="14">
 <pre><code>'POLYGON ((2.2 4.2, 7.2 -25.1, 9.26 -2.456, 2.2 4.2))'</code></pre>
 </div>
 </div>
-<p>Note the double parentheses</p>
+<p>Note the double parentheses. In contrast:</p>
+<div id="5f6898a5" class="cell" data-execution_count="15">
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>line.wkt</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="15">
+<pre><code>'LINESTRING (2.2 4.2, 7.2 -25.1, 9.26 -2.456)'</code></pre>
+</div>
+</div>
 </section>
 <section id="polygon-attributes" class="level2">
 <h2 class="anchored" data-anchor-id="polygon-attributes"><code>Polygon</code>: attributes</h2>
-<div class="cell" data-execution_count="16">
+<div id="1f9b0db4" class="cell" data-execution_count="16">
 <div class="sourceCode cell-code" id="cb26"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Polygon centroid: "</span>, poly.centroid)</span>
-<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Polygon Area: "</span>, poly.area)</span>
-<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Polygon Bounding Box: "</span>, poly.bounds)</span>
-<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Polygon Exterior: "</span>, poly.exterior)</span>
-<span id="cb26-5"><a href="#cb26-5" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Polygon Exterior Length: "</span>, poly.exterior.length)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>poly.centroid</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Polygon centroid:  POINT (6.22 -7.785333333333334)
-Polygon Area:  86.789
-Polygon Bounding Box:  (2.2, -25.1, 9.26, 4.2)
-Polygon Exterior:  LINEARRING (2.2 4.2, 7.2 -25.1, 9.26 -2.456, 2.2 4.2)
-Polygon Exterior Length:  62.16395199996553</code></pre>
+<pre><code>Polygon centroid:  POINT (6.22 -7.785333333333334)</code></pre>
+</div>
+<div class="cell-output cell-output-display" data-execution_count="16">
+<div>
+<figure class="figure">
+<p><img src="spatial_1_files/figure-html/cell-17-output-2.svg" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<div id="0c184ca9" class="cell" data-execution_count="17">
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Polygon Area: "</span>, poly.area)</span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a>poly.area </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Polygon Area:  86.789</code></pre>
+</div>
+<div class="cell-output cell-output-display" data-execution_count="17">
+<pre><code>86.789</code></pre>
+</div>
+</div>
+<div id="4acbf70c" class="cell" data-execution_count="18">
+<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Polygon Bounding Box: "</span>, poly.bounds)</span>
+<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a>poly.bounds</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Polygon Bounding Box:  (2.2, -25.1, 9.26, 4.2)</code></pre>
+</div>
+<div class="cell-output cell-output-display" data-execution_count="18">
+<pre><code>(2.2, -25.1, 9.26, 4.2)</code></pre>
+</div>
+</div>
+<div id="f9cb3ce4" class="cell" data-execution_count="19">
+<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Polygon Exterior: "</span>, poly.exterior)</span>
+<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a>poly.exterior</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Polygon Exterior:  LINEARRING (2.2 4.2, 7.2 -25.1, 9.26 -2.456, 2.2 4.2)</code></pre>
+</div>
+<div class="cell-output cell-output-display" data-execution_count="19">
+<div>
+<figure class="figure">
+<p><img src="spatial_1_files/figure-html/cell-20-output-2.svg" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<p><code>LinearRing</code> is similar to a <code>LineString</code>, but it it must be: 1. a closed loop 2. cannot intersect itself</p>
+<p><code>Polygon</code>s can be easily formed from <code>LinearRing</code>s but not all <code>LineString</code>s can be transformed into polygons.</p>
+<div id="3d0a0c06" class="cell" data-execution_count="20">
+<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Polygon Exterior Length: "</span>, poly.exterior.length)</span>
+<span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a>poly.exterior.length</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Polygon Exterior Length:  62.16395199996553</code></pre>
+</div>
+<div class="cell-output cell-output-display" data-execution_count="20">
+<pre><code>62.16395199996553</code></pre>
 </div>
 </div>
 </section>
 <section id="polygon-example-ii" class="level2">
 <h2 class="anchored" data-anchor-id="polygon-example-ii"><code>Polygon</code>: example II</h2>
-<div class="cell" data-execution_count="17">
-<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>exterior <span class="op">=</span> [(<span class="op">-</span><span class="dv">180</span>, <span class="dv">90</span>), (<span class="op">-</span><span class="dv">180</span>, <span class="op">-</span><span class="dv">90</span>), (<span class="dv">180</span>, <span class="op">-</span><span class="dv">90</span>), (<span class="dv">180</span>, <span class="dv">90</span>)]</span>
-<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a>poly_without_hole <span class="op">=</span> Polygon(shell<span class="op">=</span>exterior)</span>
-<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a>poly_without_hole</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="17">
-<p><img src="spatial_1_files/figure-html/cell-18-output-1.svg" class="img-fluid"></p>
+<div id="34c51e1a" class="cell" data-execution_count="21">
+<div class="sourceCode cell-code" id="cb39"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a>exterior <span class="op">=</span> [(<span class="op">-</span><span class="dv">180</span>, <span class="dv">90</span>), (<span class="op">-</span><span class="dv">180</span>, <span class="op">-</span><span class="dv">90</span>), (<span class="dv">180</span>, <span class="op">-</span><span class="dv">90</span>), (<span class="dv">180</span>, <span class="dv">90</span>)]</span>
+<span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a>poly_without_hole <span class="op">=</span> Polygon(shell<span class="op">=</span>exterior)</span>
+<span id="cb39-3"><a href="#cb39-3" aria-hidden="true" tabindex="-1"></a>poly_without_hole</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="21">
+<div>
+<figure class="figure">
+<p><img src="spatial_1_files/figure-html/cell-22-output-1.svg" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<div id="c37e9607" class="cell" data-execution_count="22">
+<div class="sourceCode cell-code" id="cb40"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a>linestring_from_exterior <span class="op">=</span> LineString(exterior)</span>
+<span id="cb40-2"><a href="#cb40-2" aria-hidden="true" tabindex="-1"></a>linestring_from_exterior</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="22">
+<div>
+<figure class="figure">
+<p><img src="spatial_1_files/figure-html/cell-23-output-1.svg" class="img-fluid figure-img"></p>
+</figure>
+</div>
 </div>
 </div>
 </section>
 <section id="polygon-example-ii-with-a-hole" class="level2">
 <h2 class="anchored" data-anchor-id="polygon-example-ii-with-a-hole"><code>Polygon</code>: example II with a hole</h2>
-<div class="cell" data-execution_count="18">
-<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Define the hole coordinates (a single hole in this case)</span></span>
-<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a>holes_coordinates <span class="op">=</span> [[(<span class="op">-</span><span class="dv">170</span>, <span class="dv">80</span>), (<span class="op">-</span><span class="dv">170</span>, <span class="op">-</span><span class="dv">80</span>), (<span class="dv">170</span>, <span class="op">-</span><span class="dv">80</span>), (<span class="dv">170</span>, <span class="dv">80</span>)]]</span>
-<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a>poly_with_hole <span class="op">=</span> Polygon(shell<span class="op">=</span>exterior, holes<span class="op">=</span>holes_coordinates)</span>
-<span id="cb29-4"><a href="#cb29-4" aria-hidden="true" tabindex="-1"></a>poly_with_hole</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="18">
-<p><img src="spatial_1_files/figure-html/cell-19-output-1.svg" class="img-fluid"></p>
+<div id="ddce67d6" class="cell" data-execution_count="23">
+<div class="sourceCode cell-code" id="cb41"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Define the hole coordinates (a single hole in this case)</span></span>
+<span id="cb41-2"><a href="#cb41-2" aria-hidden="true" tabindex="-1"></a>holes_coordinates <span class="op">=</span> [[(<span class="op">-</span><span class="dv">170</span>, <span class="dv">80</span>), (<span class="op">-</span><span class="dv">170</span>, <span class="op">-</span><span class="dv">80</span>), (<span class="dv">170</span>, <span class="op">-</span><span class="dv">80</span>), (<span class="dv">170</span>, <span class="dv">80</span>)]]</span>
+<span id="cb41-3"><a href="#cb41-3" aria-hidden="true" tabindex="-1"></a>poly_with_hole <span class="op">=</span> Polygon(shell<span class="op">=</span>exterior, holes<span class="op">=</span>holes_coordinates)</span>
+<span id="cb41-4"><a href="#cb41-4" aria-hidden="true" tabindex="-1"></a>poly_with_hole</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="23">
+<div>
+<figure class="figure">
+<p><img src="spatial_1_files/figure-html/cell-24-output-1.svg" class="img-fluid figure-img"></p>
+</figure>
+</div>
 </div>
 </div>
 </section>
@@ -556,7 +511,7 @@ Polygon Exterior Length:  62.16395199996553</code></pre>
 </section>
 <section id="geo-data-in-vectors-summary" class="level2">
 <h2 class="anchored" data-anchor-id="geo-data-in-vectors-summary">geo data in vectors: summary</h2>
-<table class="table">
+<table class="caption-top table">
 <thead>
 <tr class="header">
 <th>Data type</th>
@@ -574,13 +529,13 @@ Polygon Exterior Length:  62.16395199996553</code></pre>
 </tr>
 <tr class="odd">
 <td><code>Polygon</code></td>
-<td><code>(24.5 61, 25 60.5, 25.5 61, 24.5 61)</code></td>
+<td><code>((24.5 61, 25 60.5, 25.5 61, 24.5 61))</code></td>
 </tr>
 </tbody>
 </table>
 <p>Methods</p>
 <ul>
-<li>any type: <code>.coords</code>, <code>.x</code>, <code>.xy</code></li>
+<li>any type: <code>.coords</code>, <code>.x</code>, <code>.xy</code>, <code>.wkt</code></li>
 <li><code>LineString</code> or <code>Polygon</code>: <code>.centroid</code>, <code>.length</code></li>
 <li><code>Polygon</code>: <code>.bounds</code>, <code>.area</code>, <code>.exterior</code></li>
 </ul>
@@ -616,12 +571,15 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     icon: icon
   };
   anchorJS.add('.anchored');
-  const clipboard = new window.ClipboardJS('.code-copy-button', {
-    target: function(trigger) {
-      return trigger.previousElementSibling;
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
     }
-  });
-  clipboard.on('success', function(e) {
+    return false;
+  }
+  const onCopySuccess = function(e) {
     // button target
     const button = e.trigger;
     // don't keep focus
@@ -653,11 +611,50 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     }, 1000);
     // clear code selection
     e.clearSelection();
+  }
+  const getTextToCopy = function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+    text: getTextToCopy
   });
-  function tippyHover(el, contentFn) {
+  clipboard.on('success', onCopySuccess);
+  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    // For code content inside modals, clipBoardJS needs to be initialized with a container option
+    // TODO: Check when it could be a function (https://github.com/zenorocha/clipboard.js/issues/860)
+    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+      text: getTextToCopy,
+      container: window.document.getElementById('quarto-embedded-source-code-modal')
+    });
+    clipboardModal.on('success', onCopySuccess);
+  }
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp('/' + window.location.host + '/');
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
     const config = {
       allowHTML: true,
-      content: contentFn,
       maxWidth: 500,
       delay: 100,
       arrow: false,
@@ -667,8 +664,17 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       interactive: true,
       interactiveBorder: 10,
       theme: 'quarto',
-      placement: 'bottom-start'
+      placement: 'bottom-start',
     };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
     window.tippy(el, config); 
   }
   const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
@@ -680,9 +686,245 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       try { href = new URL(href).hash; } catch {}
       const id = href.replace(/^#\/?/, "");
       const note = window.document.getElementById(id);
-      return note.innerHTML;
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
     });
   }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
   const findCites = (el) => {
     const parentEl = el.parentElement;
     if (parentEl) {
@@ -723,6 +965,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 });
 </script>
 </div> <!-- /content -->
+
 
 
 
