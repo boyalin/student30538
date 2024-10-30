@@ -41,11 +41,6 @@ format:
 
 In practice, we won't be coding our geodata by hand... Instead we are going to use shapefiles!
 
-```{python}
-import geopandas as gpd
-```
-
-
 Roadmap
 
 -   Vocabulary
@@ -432,4 +427,43 @@ After you are done, here are some cosmetic suggestions:
 * Putting it all together `geo.plot(ax = austin, alpha=0.5)`
     - This plots the `geo` object with 50% transparency, on top of axes based on the `austin` object
 
+```{python}
+import geopandas as gpd
+```
 
+```{python}
+filepath = "data/shp/austin_pop_2019.shp"
+data = gpd.read_file(filepath)
+print(data)
+```
+
+```{python}
+data.buffer(500).plot(edgecolor="white") #500 meters
+plt.axis("off")
+plt.show()
+```
+
+```{python}
+data["dense"] = 0
+# Filter rows with above average pop density and updat
+data.loc[data["pop_density_500"] > data["pop_density_k
+data.dense.value_counts()]]
+
+dissolved = data[["pop2019", "area_km2", "dense", "geo
+    by="dense", aggfunc="sum"]]
+
+#aggregation step set index to "dense", reset to defau
+dissolved = dissolved.reset_index()
+dissolved
+
+dissolved.plot(column="dense")
+plt.axis("off")
+plt.show()
+```
+
+```{python}
+import matplotlib.pyplot as plt
+data.plot(facecolor="none", linewidth=0.2)
+plt.axis("off")
+plt.show()
+```
