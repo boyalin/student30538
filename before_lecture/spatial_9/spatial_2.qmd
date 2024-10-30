@@ -10,6 +10,7 @@ format:
         toc: true
         fig-height: 2
         include-in-header: header_pagenrs.tex
+        
 include-before-body:
   text: |
     \RecustomVerbatimEnvironment{verbatim}{Verbatim}{
@@ -18,10 +19,9 @@ include-before-body:
       breaksymbolleft={},
       breaklines
     }
-output-width: 70%
 
 --- 
-<!--
+<!--fontsize: 8pt
 ---
 title: "Spatial II"
 author: "Peter Ganong and Maggie Shi"
@@ -113,11 +113,13 @@ type(data)
 
 ## Previewing a `GeoDataFrame`
 
+
+\scriptsize
 ```{python}
 data.head()
 ```
 
-
+\normalsize
 
 ## Previewing a `GeoSeries`
 
@@ -156,11 +158,16 @@ type(data["geometry"])
 
 ## `head()`
 
+
+\scriptsize 
+
 ```{python}
 data["geometry"].head()
 ```
 
-## calculate area (in km\^2)
+\normalsize
+
+## calculate area (in square meters)
 
 ```{python}
 data["geometry"].area
@@ -168,12 +175,16 @@ data["geometry"].area
 
 ## add column to data frame
 
+
+\scriptsize 
 ```{python}
 #data.area is just a shorthand for data.geometry.area
 data["area_km2"] = data.area / 1000000
-data.head()
+data[['tract', 'area_km2', 'geometry']].head()
 ```
-<!-- MS to GGG: how do we know that the area is in meters? -->
+
+\normalsize
+
 ## my first choropleth
 
 ```{python}
@@ -266,18 +277,26 @@ plt.show()
 Source: https://spatialanalysisonline.com/HTML/centroids_and_centers.htm
 
 ## aside: change active geometry
+
+\scriptsize
 ```{python}
 data["centroid"] = data.centroid
 data.set_geometry("centroid")
-data.head()
+data[['tract', 'centroid', 'geometry']].head()
 ```
-
+\normalsize
 
 ## methods: bounding box definition
 
 What it is: the tightest possible rectangle around a shape, capturing all of its points within this rectangle. 
 
-Sample use case: filtering a larger spatial dataset to subset of interest
+## Bounding boxes use cases
+
+when you don't have a better way to filter the data
+--maps (rectangular b/c screens are rectangular)
+--very fast, because compares just X and Y values instead of doing a spatial join
+
+
 
 ## methods: bounding box for each polygon I
 
@@ -292,9 +311,13 @@ data.envelope.plot()
 
 
 ## methods: bounding box for whole data I
+
+
+\scriptsize
 ```{python}
 data.total_bounds
 ```
+\normalsize
 
 ## methods: bounding box for whole data II
 Flashback to section 6.1
@@ -352,6 +375,8 @@ data.dense.value_counts()
 <!-- MS to GGG: this would be a great discussion question (if the comment was removed): what is that line of code doing? Why would this relate to the sample use described above? Answer: say the city can only serve half of the areas with public transit and wants to create a map with just those areas combined.-->
 
 ## methods: dissolve II
+
+\scriptsize
 ```{python}
 dissolved = data[["pop2019", "area_km2", "dense", "geometry"]].dissolve(
     by="dense", aggfunc="sum"
@@ -360,6 +385,7 @@ dissolved = data[["pop2019", "area_km2", "dense", "geometry"]].dissolve(
 dissolved = dissolved.reset_index()
 dissolved
 ```
+\normalsize
 
 - Aggregating alters the way the data is indexed and makes the grouping variable the index
 - We need to reset it in order to plot, since some plotting libraries expect data to be indexed in a specific way
@@ -384,7 +410,12 @@ Spatial join: find the closest neighbor.
 ```{python}
 data_for_join = data[["tract", "geometry"]]
 print("N tracts " + str(len(data_for_join)))
-
+join_to_self = gpd.sjoin_nearest(
+    data_for_join,  #left df
+    data_for_join, #right df
+    how='inner', 
+    distance_col="distance"
+)
 ```
 
 (Contrived) example: Join every Austin tract to its closest neighbor or neighbors. How many tracts should we expect to get?
@@ -394,8 +425,8 @@ print("N tracts " + str(len(data_for_join)))
 
 
 ```{python}
-join_to_self = gpd.sjoin_nearest(data_for_join, data_for_join, how='inner', distance_col="distance")
-print("N tracts w closest neighbor " + str(len(join_to_self)))
+print("N tracts w closest neighbor " + 
+    str(len(join_to_self)))
 join_to_self[['tract_left', 'tract_right', 'distance']].head(4)
 ```
 
