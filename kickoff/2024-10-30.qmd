@@ -39,11 +39,18 @@ We updated the problem set in the student repo.
 
 * In "Calculate zip code’s distance to the nearest hospital", we simplified 2. You no longer have to create a function to see if the polygons intersect.
 * In "Calculate zip code’s distance to the nearest hospital", we eliminated 4a. You no longer have to time the join of the subset first.
+* If you did these already -- they will count as extra credit
 
 ## PS4 small changes II
 
 * Mitch noted that there was a discrepancy in the template (which had subquestions) and the problem set (which in the student repo did not). Thank you!
     * The problem set has been updated
 * The template was missing some of the header material
-    * This issue is fixed (but not need ) 
+    * This issue is fixed (but not needed ) 
     * Going forward, we will put header material in exactly one place, which will be the template
+
+## Remaining tech issues with spatial packages
+- If you find you are still having issues with spatial packages:
+    1. Try to implement Dema's mini-lesson on virtual environments
+    2. Look at endorsed answers on Ed for solutions to edge cases (e.g., issue with `fiona`)
+    3. Post in Ed thread: we will have a TA reach out to 1-1
