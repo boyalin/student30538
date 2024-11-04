@@ -86,6 +86,7 @@ The skill they should learn is what a CRS is and how to look up the EPSG numbers
 ## Reading a Shapefile `.shp`
 
 ```{python}
+import geopandas as gpd
 #in same dir:  `.shx` and `.dbf`
 filepath = "data/shp/austin_pop_2019.shp"
 data = gpd.read_file(filepath)
