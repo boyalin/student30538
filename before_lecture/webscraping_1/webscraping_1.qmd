@@ -295,6 +295,7 @@ with open(r'files/simple.html', 'r') as page:
 - The `soup` object is the website content, parsed into an easy-to-use reference
 - `lxml` is an external resource used by browsers to parse HTML
 ```{python}
+#| echo: true
 soup = BeautifulSoup(text, 'lxml')
 ```
 
@@ -366,6 +367,7 @@ Results:
 soup.find_all('p', id = lambda h: h!=None and 'second' in h)
 ```
 
+- *Aside: writing this lambda code is a fantastic use case for ChatGPT! Don't get stuck on developing your lambda function*
 
 
 
@@ -568,7 +570,7 @@ tag[0:2]
 li_nochildren = soup.find_all(lambda t: t.name == 'li' and not t.find_all())
 ```
 - `lambda` function looks for `li` tags that have **nothing nested in them**
-- *Aside: since `t.contents` returns a list, we can't use `t.contents == None`
+- *Aside: since `t.contents` returns a list, we can't use `t.contents == None`*
 
 . . .
 
