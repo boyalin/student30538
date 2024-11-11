@@ -15,14 +15,17 @@ format:
 ---
 
 
-## Problem set 5 questions 
+## Problem set 5 questions/hints
 - Like in PS4, you can work on PS5 solo
 - Late tokens for paired problem sets: we require *two late tokens* for paired problem set
 \vspace{2ex}
     - Can have 1 token from each partner
     - Or, if you have a generous partner, two from one partner 
+- Hints
+    - Canvas announcement: your crawler should not run for more than 10 minutes. If it is, debug with print statements
+    - See endorsed hint on Ed (thanks to Ralph!): "Hint when retrieving tags with class attributes"
 - Recall we drop your lowest problem set score
 
 ## Lab
 - You can go to any other section's lab for TA/faculty office hours
-- But if you typically go to the *second* Wednesday lab and want to go to the *first* one: come after the first 10 minutes to avoid the quiz
+- If you want to go to the Wednesday labs: come after the first 10 minutes to avoid the quiz

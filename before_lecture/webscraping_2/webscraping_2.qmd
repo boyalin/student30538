@@ -44,7 +44,6 @@ from bs4 import BeautifulSoup
 
 ## "Crawling" the Web: Intro 
 - One powerful way to harness web scraping tools is to use them to 'crawl' the web -- that is, to automatically navigate from page to page
-- This is especially useful if you want to scrape multiple webpages and don't know the exact URLs, but know that they link to each other
 
 ## Roadmap
 - Discuss use cases for web crawling
@@ -54,6 +53,7 @@ from bs4 import BeautifulSoup
 ## Use cases for web crawling 
 - Web crawl when you want to visit multiple URLs
 - And the URLs are located in a structured or repetitive way 
+- This is especially useful if you don't know the exact URLs, but know that they link to each other
 
 ## Example: scraping from a list of press releases  
 ![](pictures/who_africa.png){ width=100% fig-align="center"}
@@ -175,7 +175,7 @@ print(my_links[0:2])
 ```
 
 
-## Step 4: Follow the first link
+## Step 3: Follow the first link
 - Then to follow the link we collected, we simply make it the input to another request
 ```{python}
 #| echo : true
@@ -259,12 +259,12 @@ for i in range(50):
 ```{python}
 #| echo : true
 #| eval: false 
-visited_urls[]
+visited_urls = []
 for i in range(50):
-    # code to crawl here 
     if url in visited_urls:
         print('Stopped because ended up in a loop.')
         break
+    # code to crawl here 
     if url == "https://en.wikipedia.org/wiki/Philosophy": 
         print('Ended up at Philosophy in ' + str(i) + ' tries!')
         break

@@ -1,0 +1,20 @@
+---
+title: "Kickoff"
+author: "Peter Ganong and Maggie Shi"
+date: today
+format: beamer   
+execute:
+  eval: true
+  echo: true
+---
+
+## Final Project Presentations Sign Up
+
+- Everything I'm about to say, plus more details will be in a Canvas announcement Wednesday
+- Using Canvas to schedule final presentation slots
+- Friday 9 am slots will open for **one** of the group members sign up on behalf of the entire group
+- **All** group members must attend the entire class that they signed up for
+- In case you need to reschedule and all slots are taken, we will release a Google Spreadsheet so students can contact each other to switch slots
+- Any group member who is not present will receive 0 for the presentation
+
+
