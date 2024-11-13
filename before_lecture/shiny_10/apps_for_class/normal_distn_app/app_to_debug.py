@@ -11,7 +11,6 @@ def server(input, output, session):
     @render_altair
     def my_hist():
         sample = np.random.normal(input.mu(), 20, 100)
-        print(sample)
         df = pd.DataFrame({'sample': sample})
         return(
             alt.Chart(df).mark_bar().encode(
