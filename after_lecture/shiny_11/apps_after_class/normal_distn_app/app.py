@@ -12,14 +12,14 @@ app_ui = ui.page_fluid(
 def server(input, output, session):
     @render.plot
     def my_hist():
-        sample = np.random.normal(input.n(), 20, 200)
+        sample = np.random.normal(input.mu(), 20, 200)
         fig, ax = plt.subplots()
         ax.hist(sample, bins=30, color='blue', alpha=0.7)
         return fig
 
     @render.text
     def my_sumstats():
-        sample = np.random.normal(input.n(), 20, 200)
+        sample = np.random.normal(input.mu(), 20, 200)
         min = np.min(sample)
         max = np.max(sample)
         median = np.median(sample)
