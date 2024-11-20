@@ -67,6 +67,7 @@ import pandas as pd
 ## Preview the end goal for Example 1
 
 `$ cd <your_details>/apps_for_class/`
+
 `$ shiny run covid-conditional-basic/app.py`
 
 Note: we get some warnings related to `set_ticklabels()`. Ignore these.
@@ -147,18 +148,22 @@ ui.panel_conditional(
 
 
 ## Example 2: A More Complicated Conditional Panel
+
+Preview the end state `$ shiny run covid-conditional-advanced/app.py`
+
 - Say that on the server-side we have:
     - A `render.plot` called `ts` that plots a time series of one state
     - Another `render.plot` called `ts2` that plots two states at a time
 
-- We want to develop the **UI-side** so that it does the following: 
+- We want to develop the parallel **UI-side** 
+
+Let's map the conditions at the whiteboard
 
 1. Has a switch that toggles between showing 1 or 2 states in time series
 2. If user chooses to show one state: plot `ts` and asks if they want to show data
 3. If a user chooses to show another state and wants to show data: plot `ts` and show `subsetted_data_table` 
 4. If user chooses to show two states: let user choose the second state and plot the `ts2` for both states.
 
-Let's preview the end state `$ shiny run covid-conditional-advanced/app.py`
 
 ## Example 2: add a toggle switch
 - [Toggle switch documentation (link)](https://shiny.posit.co/py/api/core/ui.input_switch.html)
@@ -274,6 +279,7 @@ ui.panel_conditional(
 ## Dynamic UI: Intro and Roadmap
 \vspace{2ex}
 * Recap hard-coding of state list is generated in Shiny
+* Define dynamic UI
 * Introduce `@reactive.effect` and defining functions with no name
 * Show how this can be used to avoid hard-coding the state list 
 
@@ -282,7 +288,7 @@ ui.panel_conditional(
 \vspace{2ex}
 - Recall how we've been defining the state selection list in our apps (e.g., see `covid-conditional-basic` or `covid-conditional-advanced`)
 - **UI-side** looks like:
-\AddToHookNext{env/Highlighting/begin}{\tiny}
+\AddToHookNext{env/Highlighting/begin}{\footnotesize}
 ```{python}
     ui.input_select(id = 'state', label = 'Choose a state:',
     choices = ["Alabama", "Alaska", "Arizona", "Arkansas", "California", "Colorado", "Connecticut", "Delaware", "Florida", "Georgia", "Hawaii", "Idaho", "Illinois", "Indiana", "Iowa", "Kansas", "Kentucky", "Louisiana", "Maine", "Maryland", "Massachusetts", "Michigan", "Minnesota", "Mississippi", "Missouri", "Montana", "Nebraska", "Nevada", "New Hampshire", "New Jersey", "New Mexico", "New York", "North Carolina", "North Dakota", "Ohio", "Oklahoma", "Oregon", "Pennsylvania", "Rhode Island", "South Carolina", "South Dakota", "Tennessee", "Texas", "Utah", "Vermont", "Virginia", "Washington", "West Virginia", "Wisconsin", "Wyoming"])
@@ -299,9 +305,11 @@ ui.panel_conditional(
     - And use this list as the choices instead of `["Alabama", "Alaska", "Arizona", "Arkansas", "California",...`
 - Importantly, want this to happen automatically (i.e., without requiring the user to input anything)
 
-. . .
 
-- To do so, we will write a reactive function without a name and use the decorator `@reactive.effect`
+Discussion questions: 
+
+1. Prior examples: which side "acts" first: UI or server? 
+2. How will it need to differ here?
 
 ## Dynamic UI: Reactive effects
 - Because generating the state list requires some `pandas` calculations, we will first add to the **server-side**:
@@ -322,6 +330,7 @@ def _():
 
 ::: {.column width="60%"}
 
+\AddToHookNext{env/Highlighting/begin}{\tiny}
 ```{python}
 app_ui = ui.page_fluid(
     ui.input_select(             #1
@@ -372,7 +381,7 @@ def server(input, output, session):
 :::: {.columns}
 
 ::: {.column width="50%"}
-
+\AddToHookNext{env/Highlighting/begin}{\footnotesize}
 ```{python}
 def server(input, output, session):
     @reactive.calc
@@ -387,6 +396,7 @@ def server(input, output, session):
 :::
 
 ::: {.column width="50%"}
+\AddToHookNext{env/Highlighting/begin}{\footnotesize}
 ```{python}
 def server(input, output, session):
     @reactive.effect
@@ -461,7 +471,7 @@ MS to PG: yes, that is it. The shiny syntax for the UI-side (and for parts of th
 :::: {.columns}
 
 ::: {.column width="60%"}
-\AddToHookNext{env/Highlighting/begin}{\footnotesize}
+\AddToHookNext{env/Highlighting/begin}{\tiny}
 ```{python}
 app_ui = ui.page_sidebar(
     ui.sidebar(
@@ -531,7 +541,7 @@ ui.layout_columns(
 :::: {.columns}
 
 ::: {.column width="50%"}
-\AddToHookNext{env/Highlighting/begin}{\footnotesize}
+\AddToHookNext{env/Highlighting/begin}{\tiny}
 ```{python}
 ui.layout_columns(
     ui.card(
@@ -766,7 +776,9 @@ page1 = ui.navset_card_underline(
     ui.nav_panel("Plot", ui.output_plot("hist")),
     ui.nav_panel("Table", ui.output_data_frame("data")),
     footer=ui.input_select(
-        "var", "Select variable", choices=["bill_length_mm", "body_mass_g"]
+        id = "var", 
+        label = "Select variable", 
+        choices = ["bill_length_mm", "body_mass_g"]
     ),
     title="Penguins data",
 )
@@ -801,8 +813,10 @@ app_ui = ui.page_navbar(
 page1 = ui.navset_card_underline(
     ui.nav_panel("Plot", ui.output_plot("hist")),
     ui.nav_panel("Table", ui.output_data_frame("data")),
-    footer=ui.input_select(
-        "var", "Select variable", choices=["bill_length_mm", "body_mass_g"]
+   footer=ui.input_select(
+        id = "var", 
+        label = "Select variable", 
+        choices = ["bill_length_mm", "body_mass_g"]
     ),
     title="Penguins data",
 )
@@ -839,7 +853,9 @@ page1 = ui.navset_card_underline(
     ui.nav_panel("Plot", ui.output_plot("hist")),
     ui.nav_panel("Table", ui.output_data_frame("data")),
     footer=ui.input_select(
-        "var", "Select variable", choices=["bill_length_mm", "body_mass_g"]
+        id = "var", 
+        label = "Select variable", 
+        choices = ["bill_length_mm", "body_mass_g"]
     ),
     title="Penguins data",
 )
@@ -873,7 +889,9 @@ page1 = ui.navset_card_underline(
     ui.nav_panel("Plot", ui.output_plot("hist")),
     ui.nav_panel("Table", ui.output_data_frame("data")),
     footer=ui.input_select(
-        "var", "Select variable", choices=["bill_length_mm", "body_mass_g"]
+        id = "var", 
+        label = "Select variable", 
+        choices = ["bill_length_mm", "body_mass_g"]
     ),
     title="Penguins data",
 )
