@@ -39,12 +39,17 @@ format:
 - Side note: GPTs are *large* language models (hence the term LLMs) -- basic NLP tools consist of *small* language model
 
 ## Capabilities of Language Models: Technical
+
+Cover these in class
+
 - **Tokenizing**: splits text into **tokens** -- usually a word, punctuation, or white space
 - **Named entity detection**: identifies people, organizations, locations
 - **Dependency parser**: analyzes syntax structure of sentence
+
+Will not cover these for time reasons, but good to know about 
+
 - **Parts-of-speech tagger**: assigns parts-of-speech to tokens
-- **Lemmatizer**: converts words to their base form (e.g., texts $\to$ text, coding $\to$ code, fastest $\to$ fast)
-- *Note: we will not be able to cover all of these topics today -- the goal is just to give you a taste of what language models can do*
+- Converts words to their base form (e.g., texts $\to$ text, coding $\to$ code, fastest $\to$ fast)
 
 ## Capability of Language Models: Conceptual
 - We can use NLP methods to answer questions about a piece of text in a data-driven way
@@ -148,6 +153,11 @@ for token in sents_list[1]:
 - But for `"wouldn't"`, it splits it into `"would"` and `"n't"` to distinguish that they are two different parts of speech, with very different functions within the sentence
     - `"would"`: auxilary verb
     - `"n't"`: negation
+- Other example of splits within words: "state-of-the-art"
+    - "state"
+    - "of"
+    - "the"
+    - "art"
 
 ## Summary 
 - Language models are pre-trained models that parse through and "understand" text
@@ -220,9 +230,18 @@ print([sent._.blob.polarity for sent in doc.sents])
 print([token._.blob.polarity for token in doc])
 ```
 
-Discussion q: do you agree that second sentence is neutral?
 
-## Sentiment Analysis: polarity 
+## Sentiment Analysis: Under the Hood 
+- Where do these sentiment values come from?
+- `spacytextblob` builds on a lexicon (aka library) called `pattern`
+    - **Lexicon**: a collection of words and their associated polarity/subjectivity scores 
+    - Developed through manual labeling of words, mostly of *adjectives*
+    - This is why "I wouldn't want to stay at this level of inflation, though." gets a polarity of zero
+- Depending on your use, focusing on just the adjectives may or may not be sufficient
+    - More appropriate for highly emotive text: social media, debates
+    - Less appropriate for formal text: academic research, diplomatic communications
+
+## Sentiment Analysis: subjectivity 
 - Subjectivity: higher number is more subjective
 ```{python}
 # | echo : true
@@ -257,16 +276,20 @@ doc._.blob.subjectivity
 ```
 
 
-## Sentiment Analysis: Under the Hood 
-- Where do these sentiment values come from?
-- `spacytextblob` builds on a lexico (aka library) called `pattern`
-    - **Lexicon**: a collection of words and their associated polarity/subjectivity scores 
-    - `pattern` lexicon is an open-source was developed at the University of Antwerp 
-    - Developed through manual labeling of words, mostly of *adjectives*
-    - This is why "I wouldn't want to stay at this level of inflation, though." gets a polarity of zero
-- Depending on your use, focusing on just the adjectives may or may not be sufficient
-    - More appropriate for highly emotive text: social media, debates
-    - Less appropriate for formal text: academic research, diplomatic communications
+## Sentiment Analysis: subjectivity 
+
+It's just using labels word by word (but for subjective vs objective instead of positive vs negative)
+
+```{python}
+# | echo : true
+from spacytextblob.spacytextblob import SpacyTextBlob 
+nlp = spacy.load('en_core_web_sm')
+nlp.add_pipe('spacytextblob')
+doc = nlp("I love this beautiful painting; it’s so amazing!")
+print(doc._.blob.subjectivity)
+print([token._.blob.subjectivity for token in doc])
+```
+
 
 
 ## Application: Presidential Debates
@@ -385,8 +408,10 @@ chart1 | chart2
 - He also had over twice as many sentences than Clinton
 
 ## Do-pair-share
+
+Minimum tech instructions (troubleshooting and tips on next slide)
 ```
-$ pip install spacy spacytextblob
+$ pip install --upgrade spacy spacytextblob numpy pandas
 $ python -m spacy download en_core_web_sm
 ```
 
@@ -394,14 +419,17 @@ $ python -m spacy download en_core_web_sm
 import spacy
 nlp = spacy.load("en_core_web_sm")
 from spacytextblob.spacytextblob import SpacyTextBlob 
-nlp = spacy.load('en_core_web_sm')
 nlp.add_pipe('spacytextblob')
 ```
 
 1. Load in the Trump 2020 debate text (`files/`) and conduct polarity sentiment analysis on it
 2. Plot time series for Trump 2020. Compare it to Trump 2016 plot in the slides.
 
-Hint: if you are running the code interactively, you'll need to first run `alt.renderers.enable("jupyter")`
+## Do-pair-share tech tips
+
+There is a version incompatibility issue between `spaCy` and `numpy` (**[details](https://stackoverflow.com/questions/78634235/numpy-dtype-size-changed-may-indicate-binary-incompatibility-expected-96-from)**). It can usually be addressed by jointly installing `spaCy` and `numpy` so that `pip` ensures you get compatible versions. Some students may need to create a new virtual environment first (**[details](https://code.visualstudio.com/docs/python/environments)**)
+
+For altair, use `alt.renderers.enable("jupyter")` to render plot in interactive mode or `alt.renderers.enable("png")` to render plot in knitted QMD
 
 
 ## Sentiment Analysis: Summary 
@@ -496,8 +524,7 @@ apple_text = "Apple announced in March that it was releasing a new iPhone. Apple
 
 apple_doc = nlp(apple_text)
 entities = [(entity.label_, entity.text) for entity in apple_doc.ents]
-print(entities[0])
-print(entities[1])
+print(entities)
 ```
 
 . . . 
@@ -506,13 +533,13 @@ print(entities[1])
 \AddToHookNext{env/Highlighting/begin}{\small}
 ```{python}
 apple_text = "Apple announced in March that it was releasing a new iPhone. Apples are a delicious snack."
+
 apple_doc = nlp(apple_text)
 entities = [(entity.label_, entity.text) for entity in apple_doc.ents]
-print(entities[0])
-print(entities[1])
+print(entities)
 ```
 
-- Known entity detection can differentiate between "Apple" the company and "Apples" the fruit 
+- Known entity detection can differentiate between "Apple" the company (an entity) and "Apples" the fruit (not an entity)
 - But it's also imperfect - did not detect "iPhone" as a known entity 
 
 ## Exercise 
@@ -598,12 +625,20 @@ print(pd.Series(entities_clinton).value_counts().head(10))
 
 ## Dependency Parsing Terminology
 - _Question: what is being said about a particular topic?_
-- **Dependency parsing**: analyze grammatical structure of sentence and establish relationship between **head** words and their **dependents** or **children** 
-- **Head** or **parent**:  token (usually a verb or noun) that other words are connected to 
+- **Dependency parsing**: analyze grammatical structure of sentence and establish relationship between tokens and their children or ancestors
 - **Children**: words that modifies its head (e.g., subjects, objects, adjectives, adverbs)
 - **Ancestor**: any token *higher up* in the dependency tree -- i.e., parent, parent's parent
-<!-- - **Root**:  the main verb or the central word governing the entire sentence -->
+- **Root**:  the main verb or the central word governing the entire sentence
 
+## Dependency Grammars Intro
+
+![](pictures/flight_example.png)
+
+Source: Speech and Language Processing textbook by Jurasfky and Martin. **[Link](https://web.stanford.edu/~jurafsky/slp3/19.pdf)**
+
+## Dependency Grammars II
+
+![](pictures/flight_tree.png){width=80%}
 
 ## Illustrating Dependencies
 - `spacy` has a built-in functionality to visualize these relationships 
@@ -614,6 +649,7 @@ from spacy import displacy
 doc = nlp("Jerome Powell said the Federal Reserve Board wouldn't raise the federal funds rate.")
 displacy.render(doc, style="dep", jupyter=True)
 ```
+
 
 ```{python}
 from spacy import displacy
@@ -658,6 +694,22 @@ for token in doc:
             print(f"{child.text}")
         
 ```
+
+## "said" has children but not ancestors
+```{python}
+for token in doc:
+    if token.text == "said":
+        for child in token.children:
+            print(f"{child.text}")
+```
+
+```{python}
+for token in doc:
+    if token.text == "said":
+        for anc in token.ancestors:
+            print(f"{anc.text}")
+```
+
 
 
 ## Application: Presidential Debates
@@ -728,7 +780,7 @@ print(f"Trump's sentiment on the economy: {mean_polarity_trump:.2f}")
 - We can use this to see what words are used in reference to key topics 
 - Could refine this analysis by combining it with:
     - **Parts of speech** tagging (e.g., keep only adjectives or adverbs)
-    - **Lemmatization** (i.e., convert "growing" into "grow")
+    - **Base** versions of words (i.e., convert "growing" into "grow")
 
 ## NLP: Summary
 - NLP uses trained language models to parse through text, allowing us to use it as data
